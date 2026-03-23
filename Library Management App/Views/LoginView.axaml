@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="using:Library_Management_App.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:LoginViewModel"
+             x:Class="Library_Management_App.Views.LoginView">
+
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="25">
+        <TextBlock Text="Username"/>
+        <TextBox/>
+
+        <TextBlock Text="Password"/>
+        <TextBox/>
+
+    </StackPanel>
+
+</UserControl>
