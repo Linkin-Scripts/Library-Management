@@ -14,10 +14,10 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
-    <StackPanel>
-        <ContentControl Content="{Binding CurrentView}"/>
-        <Button Content="Next" Command="{Binding NextView}"/>
-    </StackPanel>
+    <!-- Using grid instead of StackPanel because the vuews were getting divided in half (dont know why)-->
+    <Grid RowDefinitions="*,Auto">
+        <ContentControl Grid.Row="0" Content="{Binding CurrentView}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+    </Grid>
 
 </Window>

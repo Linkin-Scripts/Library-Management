@@ -6,28 +6,22 @@ namespace Library_Management_App.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    private LoginView LoginView {get;} = new() { DataContext= new LoginViewModel() };
-    private HomeView HomeView {get;} = new() { DataContext= new HomeViewModel() };
+    private LoginViewModel _loginViewModel = new("Data/users.json");
+    private HomeViewModel _homeViewModel = new();
+
+    private LoginView LoginView { get; }
+    private HomeView HomeView { get; }
 
     [ObservableProperty]
     private UserControl _currentView;
 
     public MainWindowViewModel()
     {
+        _loginViewModel.LoginSuccessful += () => CurrentView = HomeView;
+
+        LoginView = new LoginView { DataContext = _loginViewModel };
+        HomeView = new HomeView { DataContext = _homeViewModel };
+
         CurrentView = LoginView;
     }
-
-    public void NextView()
-    {
-        if (CurrentView == LoginView)
-        {
-            CurrentView = HomeView;
-        }
-        else
-        {
-            CurrentView = LoginView;
-        }
- 
-    }
-
 }
