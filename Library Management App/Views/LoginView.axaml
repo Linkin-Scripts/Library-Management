@@ -34,7 +34,7 @@
             <Style Selector="^:focus">
                 <Setter Property="BorderBrush" Value="#8B5E3C"/>
                 <Setter Property="Background" Value="#ffffff"/>
-                <Setter Property="Foreground" Value="#ffffff"/>
+                <Setter Property="Foreground" Value="#4a3421"/>
             </Style>
             <Style Selector="^:pointerover">
                 <Setter Property="BorderBrush" Value="#B08060"/>
@@ -168,11 +168,13 @@
                     <TextBlock Text="New to the Library?"
                                FontSize="13"
                                Foreground="#8A7B6A"/>
-                    <TextBlock Text="Create account"
+                    <Button Content="Create account"
                                FontSize="13"
                                Foreground="#8B5E3C"
+                               Background="Transparent"
                                FontWeight="SemiBold"
-                               Cursor="Hand"/>
+                               Cursor="Hand"
+                               Command="{Binding NavigateToRegisterCommand}"/>
                 </StackPanel>
             </StackPanel>
         </Border>

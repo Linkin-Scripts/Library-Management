@@ -6,22 +6,33 @@ namespace Library_Management_App.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    private LoginViewModel _loginViewModel = new("Data/users.json");
-    private HomeViewModel _homeViewModel = new();
+    private readonly string _filePath = "Data/users.json";
+
+    private LoginViewModel _loginViewModel;
+    private HomeViewModel _homeViewModel;
+    private RegisterViewModel _registerViewModel;
 
     private LoginView LoginView { get; }
     private HomeView HomeView { get; }
+    private RegisterView RegisterView { get; }
 
     [ObservableProperty]
     private UserControl _currentView;
 
     public MainWindowViewModel()
     {
-        _loginViewModel.LoginSuccessful += () => CurrentView = HomeView;
+        _homeViewModel = new();
+        _loginViewModel = new(_filePath);
+        _registerViewModel = new(_filePath);
 
-        LoginView = new LoginView { DataContext = _loginViewModel };
-        HomeView = new HomeView { DataContext = _homeViewModel };
+        LoginView = new() { DataContext = _loginViewModel };
+        HomeView = new() { DataContext = _homeViewModel };
+        RegisterView = new() { DataContext = _registerViewModel };
 
         CurrentView = LoginView;
+
+        _loginViewModel.LoginSuccessful += () => CurrentView = HomeView;
+        _loginViewModel.RegisterClicked += () => CurrentView = RegisterView;
+        _registerViewModel.LoginClicked += () => CurrentView = LoginView;
     }
 }

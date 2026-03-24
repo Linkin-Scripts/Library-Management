@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Library_Management_App.Data;
@@ -10,7 +11,7 @@ namespace Library_Management_App.ViewModels;
 public partial class LoginViewModel : ViewModelBase
 {
     public event Action? LoginSuccessful;
-
+    public event Action? RegisterClicked;
     private IFIleBackend<IUser> _fileBackend;
 
 
@@ -23,9 +24,13 @@ public partial class LoginViewModel : ViewModelBase
     [RelayCommand]
     private void Login()
     {
-        LoginSuccessful.Invoke();
-
-        SaveUser();
+        if (!RegisterViewModel.CheckExistingUser(_fileBackend, UserName) && CheckPassword())
+            LoginSuccessful?.Invoke();
+    }
+    [RelayCommand]
+    private void NavigateToRegister()
+    {
+        RegisterClicked?.Invoke();
     }
 
     public LoginViewModel(string filePath)
@@ -33,10 +38,18 @@ public partial class LoginViewModel : ViewModelBase
         _fileBackend = new FileBackend(filePath);
     }
 
-    private bool SaveUser()
+    private bool CheckPassword()
     {
-        _fileBackend.Save(new User(){ UserName = UserName, Password = Password });
+        List<IUser> users = _fileBackend.Load();
 
-        return true;
+        foreach(IUser user in users)
+        {
+            var userInfo = user.GetUserInformation();
+
+            if(userInfo["UserName"] == UserName && userInfo["Password"] == Password)
+                return true;
+        }
+        
+        return false;
     }
 }

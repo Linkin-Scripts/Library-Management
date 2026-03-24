@@ -1,0 +1,190 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="using:Library_Management_App.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:RegisterViewModel"
+             x:Class="Library_Management_App.Views.RegisterView"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
+
+    <UserControl.Styles>
+
+        <!-- Input label style -->
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#8A7B6A"/>
+            <Setter Property="LetterSpacing" Value="2"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <!-- Text field style -->
+        <Style Selector="TextBox.field">
+            <Setter Property="Background" Value="#FAF7F2"/>
+            <Setter Property="Foreground" Value="#2C1F14"/>
+            <Setter Property="BorderBrush" Value="#D9CEBF"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="Padding" Value="14,12"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="MinWidth" Value="320"/>
+
+            <Style Selector="^:focus">
+                <Setter Property="BorderBrush" Value="#8B5E3C"/>
+                <Setter Property="Background" Value="#ffffff"/>
+                <Setter Property="Foreground" Value="#4a3421"/>
+            </Style>
+            <Style Selector="^:pointerover">
+                <Setter Property="BorderBrush" Value="#B08060"/>
+                <Setter Property="Background" Value="#4a3421"/>
+            </Style>
+        </Style>
+
+        <!-- Primary button style -->
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#2C1F14"/>
+            <Setter Property="Foreground" Value="#F5EDD8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="0,14"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Style Selector="^:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="#4A3020"/>
+            </Style>
+            <Style Selector="^:pressed /template/ ContentPresenter">
+                <Setter Property="Background" Value="#1A0F08"/>
+            </Style>
+        </Style>
+
+    </UserControl.Styles>
+
+    <!-- Full-screen split layout -->
+    <Grid ColumnDefinitions="5*,4*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+        <!-- LEFT PANEL — decorative book/library side -->
+        <Border Grid.Column="0" Background="#1E140A" ClipToBounds="True">
+            <Grid>
+                <!-- Dark overlay for readability -->
+                <Border>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,0%">
+                            <GradientStop Color="#00000000" Offset="0"/>
+                            <GradientStop Color="#66000000" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <!-- Left panel text content -->
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Spacing="12" Margin="40,0">
+                    <!-- Book icon (Unicode) -->
+                    <TextBlock Text="📚"
+                               FontSize="48"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,8"/>
+
+                    <TextBlock Text="Library"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="#F5EDD8"
+                               HorizontalAlignment="Center"
+                               LetterSpacing="5"/>
+
+                    <Border Height="2" Width="80" HorizontalAlignment="Center">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,0%">
+                                <GradientStop Color="#00C8924A" Offset="0"/>
+                                <GradientStop Color="#FFC8924A" Offset="0.5"/>
+                                <GradientStop Color="#00C8924A" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+
+                    <TextBlock Text="Library Management System"
+                               FontSize="12"
+                               Foreground="#B09A7A"
+                               HorizontalAlignment="Center"
+                               LetterSpacing="1"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               MaxWidth="200"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- RIGHT PANEL — register form -->
+        <Border Grid.Column="1" Background="#FAF7F2">
+            <StackPanel VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Spacing="0"
+                        Width="320"
+                        Margin="40,0">
+
+                <!-- Header -->
+                <TextBlock Text="Create account"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           Foreground="#2C1F14"
+                           Margin="0,0,0,4"/>
+                <TextBlock Text="Join the library to get started"
+                           FontSize="13"
+                           Foreground="#8A7B6A"
+                           Margin="0,0,0,36"/>
+
+                <!-- Username -->
+                <TextBlock Classes="label" Text="USERNAME"/>
+                <TextBox Classes="field"
+                         Watermark="Choose a username"
+                         Margin="0,0,0,20"
+                         Text="{Binding UserName}"/>
+
+                <!-- Password -->
+                <TextBlock Classes="label" Text="PASSWORD"/>
+                <TextBox Classes="field"
+                         PasswordChar="●"
+                         Watermark="Create a password"
+                         Margin="0,0,0,20"
+                         Text="{Binding Password}"/>
+
+                <!-- Confirm Password -->
+                <TextBlock Classes="label" Text="CONFIRM PASSWORD"/>
+                <TextBox Classes="field"
+                         PasswordChar="●"
+                         Watermark="Repeat your password"
+                         Margin="0,0,0,28"
+                         Text="{Binding ConfirmPassword}"/>
+
+                <!-- Register button -->
+                <Button Classes="primary" Content="CREATE ACCOUNT" Command="{Binding RegisterCommand}"/>
+
+                <!-- Divider -->
+                <Grid ColumnDefinitions="*,Auto,*" Margin="0,24,0,0" VerticalAlignment="Center">
+                    <Border Grid.Column="0" Height="1" Background="#D9CEBF" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="or" Foreground="#B0A090"
+                               FontSize="12" Margin="12,0"/>
+                    <Border Grid.Column="2" Height="1" Background="#D9CEBF" VerticalAlignment="Center"/>
+                </Grid>
+
+                <!-- Login prompt -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,16,0,0" Spacing="4">
+                    <TextBlock Text="Already have an account?"
+                               FontSize="13"
+                               Foreground="#8A7B6A"/>
+                    <Button Content="Sign in"
+                               FontSize="13"
+                               Foreground="#8B5E3C"
+                               Background="Transparent"
+                               FontWeight="SemiBold"
+                               Cursor="Hand"
+                               Command="{Binding NavigateToLoginCommand}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
