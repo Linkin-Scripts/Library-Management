@@ -10,7 +10,7 @@ namespace Library_Management_App.ViewModels;
 
 public partial class LoginViewModel : ViewModelBase
 {
-    public event Action? LoginSuccessful;
+    public event Action<string>? LoginSuccessful;
     public event Action? RegisterClicked;
     private IFIleBackend<IUser> _fileBackend;
 
@@ -24,8 +24,8 @@ public partial class LoginViewModel : ViewModelBase
     [RelayCommand]
     private void Login()
     {
-        if (!RegisterViewModel.CheckExistingUser(_fileBackend, UserName) && CheckPassword())
-            LoginSuccessful?.Invoke();
+        if (!RegisterViewModel.CheckExistingUser(_fileBackend, UserName) && TryGetUserPermission(out string permission))
+            LoginSuccessful?.Invoke(permission);
     }
     [RelayCommand]
     private void NavigateToRegister()
@@ -38,8 +38,9 @@ public partial class LoginViewModel : ViewModelBase
         _fileBackend = new FileBackend(filePath);
     }
 
-    private bool CheckPassword()
+    private bool TryGetUserPermission(out string permission)
     {
+        permission = "user";
         List<IUser> users = _fileBackend.Load();
 
         foreach(IUser user in users)
@@ -47,7 +48,12 @@ public partial class LoginViewModel : ViewModelBase
             var userInfo = user.GetUserInformation();
 
             if(userInfo["UserName"] == UserName && userInfo["Password"] == Password)
+            {
+                if (userInfo.TryGetValue("Permission", out string? role) && !string.IsNullOrWhiteSpace(role))
+                    permission = role;
+
                 return true;
+            }
         }
         
         return false;

@@ -1,0 +1,27 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ComboBox Field Style for Role Selection -->
+    <Style Selector="ComboBox.field">
+        <Setter Property="Background" Value="#FAF7F2"/>
+        <Setter Property="Foreground" Value="#000000"/>
+        <Setter Property="BorderBrush" Value="#D9CEBF"/>
+        <Setter Property="BorderThickness" Value="0,0,0,2"/>
+        <Setter Property="Padding" Value="14,12"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="MinWidth" Value="320"/>
+
+        <Style Selector="^:focus">
+            <Setter Property="BorderBrush" Value="#8B5E3C"/>
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+        </Style>
+        <Style Selector="^:pointerover">
+            <Setter Property="BorderBrush" Value="#B08060"/>
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Foreground" Value="#F5EDD8"/>
+        </Style>
+    </Style>
+
+</Styles>

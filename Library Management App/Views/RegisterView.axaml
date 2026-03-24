@@ -10,58 +10,8 @@
              VerticalAlignment="Stretch">
 
     <UserControl.Styles>
-
-        <!-- Input label style -->
-        <Style Selector="TextBlock.label">
-            <Setter Property="FontSize" Value="11"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="#8A7B6A"/>
-            <Setter Property="LetterSpacing" Value="2"/>
-            <Setter Property="Margin" Value="0,0,0,6"/>
-        </Style>
-
-        <!-- Text field style -->
-        <Style Selector="TextBox.field">
-            <Setter Property="Background" Value="#FAF7F2"/>
-            <Setter Property="Foreground" Value="#2C1F14"/>
-            <Setter Property="BorderBrush" Value="#D9CEBF"/>
-            <Setter Property="BorderThickness" Value="0,0,0,2"/>
-            <Setter Property="Padding" Value="14,12"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="CornerRadius" Value="6"/>
-            <Setter Property="MinWidth" Value="320"/>
-
-            <Style Selector="^:focus">
-                <Setter Property="BorderBrush" Value="#8B5E3C"/>
-                <Setter Property="Background" Value="#ffffff"/>
-                <Setter Property="Foreground" Value="#4a3421"/>
-            </Style>
-            <Style Selector="^:pointerover">
-                <Setter Property="BorderBrush" Value="#B08060"/>
-                <Setter Property="Background" Value="#4a3421"/>
-            </Style>
-        </Style>
-
-        <!-- Primary button style -->
-        <Style Selector="Button.primary">
-            <Setter Property="Background" Value="#2C1F14"/>
-            <Setter Property="Foreground" Value="#F5EDD8"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Padding" Value="0,14"/>
-            <Setter Property="CornerRadius" Value="6"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Cursor" Value="Hand"/>
-
-            <Style Selector="^:pointerover /template/ ContentPresenter">
-                <Setter Property="Background" Value="#4A3020"/>
-            </Style>
-            <Style Selector="^:pressed /template/ ContentPresenter">
-                <Setter Property="Background" Value="#1A0F08"/>
-            </Style>
-        </Style>
-
+        <StyleInclude Source="/Styles/SharedStyles.xaml"/>
+        <StyleInclude Source="/Styles/RegisterViewStyles.xaml"/>
     </UserControl.Styles>
 
     <!-- Full-screen split layout -->
@@ -157,8 +107,27 @@
                 <TextBox Classes="field"
                          PasswordChar="●"
                          Watermark="Repeat your password"
-                         Margin="0,0,0,28"
+                         Margin="0,0,0,20"
                          Text="{Binding ConfirmPassword}"/>
+
+                <!-- Role -->
+                <TextBlock Classes="label" Text="ROLE"/>
+                <ComboBox Classes="field"
+                          Margin="0,0,0,20"
+                          ItemsSource="{Binding AvailableRoles}"
+                          SelectedItem="{Binding SelectedRole}"/>
+
+                <!-- Librarian Password (only visible for librarian role) -->
+                <StackPanel IsVisible="{Binding IsLibrarianSelected}">
+                    <TextBlock Classes="label" Text="LIBRARIAN PASSWORD"/>
+                    <TextBox Classes="field"
+                             PasswordChar="●"
+                             Watermark="Enter librarian password"
+                             Margin="0,0,0,28"
+                             Text="{Binding LibrarianPassword}"/>
+                </StackPanel>
+
+                <Border IsVisible="{Binding IsLibrarianSelected}" Height="8"/>
 
                 <!-- Register button -->
                 <Button Classes="primary" Content="CREATE ACCOUNT" Command="{Binding RegisterCommand}"/>

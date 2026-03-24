@@ -21,6 +21,16 @@ public partial class RegisterViewModel : ViewModelBase
     [ObservableProperty]
     private string _confirmPassword = "";
 
+    [ObservableProperty]
+    private string _selectedRole = "User";
+
+    [ObservableProperty]
+    private string _librarianPassword = "";
+
+    public IReadOnlyList<string> AvailableRoles { get; } = new List<string> { "User", "Librarian" };
+
+    public bool IsLibrarianSelected => SelectedRole.Equals("Librarian", StringComparison.OrdinalIgnoreCase);
+
     public RegisterViewModel(string filePath)
     {
         _fileBackend = new FileBackend(filePath);
@@ -29,7 +39,7 @@ public partial class RegisterViewModel : ViewModelBase
     [RelayCommand]
     private void Register()
     {
-        if (IsConfirmPassword() && UserName != "" && CheckExistingUser(_fileBackend, UserName))
+        if (IsConfirmPassword() && UserName != "" && CheckExistingUser(_fileBackend, UserName) && IsLibrarianPasswordValid())
         {
             LoginClicked?.Invoke();
             SaveUser();
@@ -44,9 +54,17 @@ public partial class RegisterViewModel : ViewModelBase
 
     private bool SaveUser()
     {
-        _fileBackend.Save(new User(){ UserName = UserName, Password = Password });
+        _fileBackend.Save(new User(){ UserName = UserName, Password = Password, Permission = SelectedRole });
 
         return true;
+    }
+
+    partial void OnSelectedRoleChanged(string value)
+    {
+        OnPropertyChanged(nameof(IsLibrarianSelected));
+
+        if (!IsLibrarianSelected)
+            LibrarianPassword = "";
     }
 
     static public bool CheckExistingUser(IFIleBackend<IUser> fIleBackend, String username)
@@ -71,6 +89,14 @@ public partial class RegisterViewModel : ViewModelBase
             return true;
         else
             return false;
+    }
+
+    private bool IsLibrarianPasswordValid()
+    {
+        if (!IsLibrarianSelected)
+            return true;
+
+        return LibrarianPassword == "admin";
     }
 
 }

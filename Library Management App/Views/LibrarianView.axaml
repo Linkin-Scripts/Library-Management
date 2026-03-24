@@ -1,0 +1,124 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="using:Library_Management_App.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
+             x:DataType="vm:LibrarianViewModel"
+             x:Class="Library_Management_App.Views.LibrarianView">
+
+    <UserControl.Styles>
+        <StyleInclude Source="/Styles/LibrarianViewStyles.xaml"/>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,*" Background="#F4EEE5">
+        <Border Background="#1F140D" Padding="24,16">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                <TextBlock Grid.Column="0" Text="Librarian Console" FontSize="24" FontWeight="Bold" Foreground="#F5EDD8"/>
+                <Button Grid.Column="1" Classes="secondary" Content="Logout" Command="{Binding LogoutCommand}"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="2*,3*" Margin="20" ColumnSpacing="20">
+            <Border Grid.Column="0" Background="#FFFFFF" CornerRadius="10" Padding="16">
+                <StackPanel>
+                    <TextBlock Classes="sectionTitle" Text="Catalog Manager"/>
+
+                    <TextBlock Classes="label" Text="TITLE"/>
+                    <TextBox Classes="field" Text="{Binding BookTitle}" Watermark="Book title"/>
+
+                    <TextBlock Classes="label" Text="AUTHOR"/>
+                    <TextBox Classes="field" Text="{Binding BookAuthor}" Watermark="Author name"/>
+
+                    <TextBlock Classes="label" Text="ISBN"/>
+                    <TextBox Classes="field" Text="{Binding BookIsbn}" Watermark="ISBN"/>
+
+                    <TextBlock Classes="label" Text="COPIES AVAILABLE"/>
+                    <NumericUpDown Classes="field"
+                                   Value="{Binding BookCopiesAvailable}"
+                                   Minimum="0"
+                                   Maximum="10000"
+                                   Increment="1"/>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,8,0,0">
+                        <Button Grid.Column="0" Classes="primary" Content="Add Book" Command="{Binding AddBookCommand}"/>
+                        <Button Grid.Column="1" Classes="secondary" Content="Edit Selected" Command="{Binding EditBookCommand}"/>
+                    </Grid>
+
+                    <Button Classes="danger" Content="Delete Selected" Command="{Binding DeleteBookCommand}" Margin="0,10,0,0"/>
+
+                    <TextBlock Text="{Binding StatusMessage}" Foreground="#5D4B38" Margin="0,14,0,0" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <Grid Grid.Column="1" RowDefinitions="*,*" RowSpacing="20">
+                <Border Grid.Row="0" Background="#FFFFFF" CornerRadius="10" Padding="16">
+                    <Grid RowDefinitions="Auto,Auto,*">
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+                            <TextBlock Grid.Column="0" Classes="sectionTitle" Text="Full Catalog"/>
+                            <Button Grid.Column="1" Classes="secondary" Content="Refresh" Command="{Binding LoadCatalogCommand}"/>
+                        </Grid>
+
+                        <Border Grid.Row="1" Margin="0,0,0,8" Padding="10,6" Background="#F2EBDD" CornerRadius="6">
+                            <Grid ColumnDefinitions="3*,2*,2*,Auto" ColumnSpacing="8">
+                                <TextBlock Grid.Column="0" Text="Title" FontWeight="SemiBold" Foreground="#5D4B38"/>
+                                <TextBlock Grid.Column="1" Text="Author" FontWeight="SemiBold" Foreground="#5D4B38"/>
+                                <TextBlock Grid.Column="2" Text="ISBN" FontWeight="SemiBold" Foreground="#5D4B38"/>
+                                <TextBlock Grid.Column="3" Text="Copies" FontWeight="SemiBold" Foreground="#5D4B38"/>
+                            </Grid>
+                        </Border>
+
+                        <ListBox Grid.Row="2"
+                                 ItemsSource="{Binding Catalog}"
+                                 SelectedItem="{Binding SelectedBook}"
+                                 BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,0,0,8" Padding="10" Background="#FAF7F2" CornerRadius="6" BorderBrush="#E8DDCF" BorderThickness="1">
+                                        <Grid ColumnDefinitions="3*,2*,2*,Auto" ColumnSpacing="8">
+                                            <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="#6E5D4B" FontWeight="SemiBold"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Author}" Foreground="#6E5D4B"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Isbn}" Foreground="#6E5D4B"/>
+                                            <TextBlock Grid.Column="3" Text="{Binding CopiesAvailable, StringFormat='Copies: {0}'}" Foreground="#6E5D4B"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="1" Background="#FFFFFF" CornerRadius="10" Padding="16">
+                    <Grid RowDefinitions="Auto,Auto,*">
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+                            <TextBlock Grid.Column="0" Classes="sectionTitle" Text="Active Loans"/>
+                            <Button Grid.Column="1" Classes="secondary" Content="Refresh" Command="{Binding LoadActiveLoansCommand}"/>
+                        </Grid>
+
+                        <Border Grid.Row="1" Margin="0,0,0,8" Padding="10,6" Background="#F2EBDD" CornerRadius="6">
+                            <Grid ColumnDefinitions="2*,2*,2*" ColumnSpacing="8">
+                                <TextBlock Grid.Column="0" Text="Title" FontWeight="SemiBold" Foreground="#5D4B38"/>
+                                <TextBlock Grid.Column="1" Text="Member" FontWeight="SemiBold" Foreground="#5D4B38"/>
+                                <TextBlock Grid.Column="2" Text="Due Date" FontWeight="SemiBold" Foreground="#5D4B38"/>
+                            </Grid>
+                        </Border>
+
+                        <ListBox Grid.Row="2" ItemsSource="{Binding ActiveLoans}" BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,0,0,8" Padding="10" Background="#FAF7F2" CornerRadius="6" BorderBrush="#E8DDCF" BorderThickness="1">
+                                        <Grid ColumnDefinitions="2*,2*,2*" ColumnSpacing="8">
+                                            <TextBlock Grid.Column="0" Text="{Binding BookTitle}" Foreground="#6E5D4B" FontWeight="SemiBold"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding MemberUserName, StringFormat='Member: {0}'}" Foreground="#6E5D4B"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding DueAtUtc, StringFormat='Due: {0:yyyy-MM-dd}'}" Foreground="#6E5D4B"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

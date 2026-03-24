@@ -1,6 +1,7 @@
 ﻿using Library_Management_App.Views;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 
 namespace Library_Management_App.ViewModels;
 
@@ -11,10 +12,12 @@ public partial class MainWindowViewModel : ViewModelBase
     private LoginViewModel _loginViewModel;
     private HomeViewModel _homeViewModel;
     private RegisterViewModel _registerViewModel;
+    private LibrarianViewModel _librarianViewModel;
 
     private LoginView LoginView { get; }
     private HomeView HomeView { get; }
     private RegisterView RegisterView { get; }
+    private LibrarianView LibrarianView { get; }
 
     [ObservableProperty]
     private UserControl _currentView;
@@ -24,15 +27,28 @@ public partial class MainWindowViewModel : ViewModelBase
         _homeViewModel = new();
         _loginViewModel = new(_filePath);
         _registerViewModel = new(_filePath);
+        _librarianViewModel = new();
 
         LoginView = new() { DataContext = _loginViewModel };
         HomeView = new() { DataContext = _homeViewModel };
         RegisterView = new() { DataContext = _registerViewModel };
+        LibrarianView = new() { DataContext = _librarianViewModel };
 
         CurrentView = LoginView;
 
-        _loginViewModel.LoginSuccessful += () => CurrentView = HomeView;
+        _loginViewModel.LoginSuccessful += permission =>
+        {
+            if (permission.Equals("librarian", StringComparison.OrdinalIgnoreCase) ||
+                permission.Equals("admin", StringComparison.OrdinalIgnoreCase))
+            {
+                CurrentView = LibrarianView;
+                return;
+            }
+
+            CurrentView = HomeView;
+        };
         _loginViewModel.RegisterClicked += () => CurrentView = RegisterView;
         _registerViewModel.LoginClicked += () => CurrentView = LoginView;
+        _librarianViewModel.LogoutRequested += () => CurrentView = LoginView;
     }
 }

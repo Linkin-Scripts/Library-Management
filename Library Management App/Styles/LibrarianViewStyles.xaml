@@ -1,0 +1,84 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Section Title Style for Librarian Console -->
+    <Style Selector="TextBlock.sectionTitle">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="#2B2118"/>
+        <Setter Property="Margin" Value="0,0,0,12"/>
+    </Style>
+
+    <!-- Label Style -->
+    <Style Selector="TextBlock.label">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="#8A7B6A"/>
+        <Setter Property="Margin" Value="0,0,0,4"/>
+    </Style>
+
+    <!-- Input Fields Style -->
+    <Style Selector="TextBox.field, NumericUpDown.field">
+        <Setter Property="Background" Value="#FAF7F2"/>
+        <Setter Property="Foreground" Value="#000000"/>
+        <Setter Property="BorderBrush" Value="#D9CEBF"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="Padding" Value="10,8"/>
+        <Setter Property="Margin" Value="0,0,0,12"/>
+
+        <Style Selector="^:focus">
+            <Setter Property="BorderBrush" Value="#8B5E3C"/>
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+        </Style>
+        <Style Selector="^:pointerover">
+            <Setter Property="BorderBrush" Value="#B08060"/>
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Foreground" Value="#F5EDD8"/>
+        </Style>
+    </Style>
+
+    <!-- Primary Button Style -->
+    <Style Selector="Button.primary">
+        <Setter Property="Background" Value="#2C1F14"/>
+        <Setter Property="Foreground" Value="#F5EDD8"/>
+        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#4A3020"/>
+        </Style>
+    </Style>
+
+    <!-- Secondary Button Style -->
+    <Style Selector="Button.secondary">
+        <Setter Property="Background" Value="#EFE5D7"/>
+        <Setter Property="Foreground" Value="#2C1F14"/>
+        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#D9CEBF"/>
+        </Style>
+    </Style>
+
+    <!-- Danger Button Style -->
+    <Style Selector="Button.danger">
+        <Setter Property="Background" Value="#8E2F2F"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#C41E1E"/>
+        </Style>
+    </Style>
+
+</Styles>
