@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Library_Management_App.Data;
@@ -54,7 +56,7 @@ public partial class RegisterViewModel : ViewModelBase
 
     private bool SaveUser()
     {
-        _fileBackend.Save(new User(){ UserName = UserName, Password = Password, Permission = SelectedRole });
+        _fileBackend.Save(new User(){ UserName = UserName, Password = HashFunction(Password), Permission = SelectedRole });
 
         return true;
     }
@@ -99,4 +101,9 @@ public partial class RegisterViewModel : ViewModelBase
         return LibrarianPassword == "admin";
     }
 
+    public static string HashFunction(string passWord)
+    {
+        byte[] bytes = SHA256.HashData(Encoding.UTF8.GetBytes(passWord));
+        return Convert.ToHexString(bytes);
+    }
 }

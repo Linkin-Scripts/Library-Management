@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.Input;
 using Library_Management_App.Data;
 using Library_Management_App.Models;
 
-
 namespace Library_Management_App.ViewModels;
 
 public partial class LoginViewModel : ViewModelBase
@@ -47,7 +46,7 @@ public partial class LoginViewModel : ViewModelBase
         {
             var userInfo = user.GetUserInformation();
 
-            if(userInfo["UserName"] == UserName && userInfo["Password"] == Password)
+            if(userInfo["UserName"] == UserName && userInfo["Password"] == RegisterViewModel.HashFunction(Password))
             {
                 if (userInfo.TryGetValue("Permission", out string? role) && !string.IsNullOrWhiteSpace(role))
                     permission = role;
@@ -58,4 +57,5 @@ public partial class LoginViewModel : ViewModelBase
         
         return false;
     }
+
 }
