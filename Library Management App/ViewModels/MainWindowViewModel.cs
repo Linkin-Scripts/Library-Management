@@ -7,10 +7,11 @@ using Library_Management_App.ViewModels;
 
 namespace Library_Management_App.ViewModels;
 
-private MemberViewModel? _memberViewModel;
-private MemberView? _memberView;
 public partial class MainWindowViewModel : ViewModelBase
 {
+    private MemberViewModel? _memberViewModel;
+    private MemberView? _memberView;
+
     private readonly string _filePath = "Data/users.json";
 
     private LoginViewModel _loginViewModel;

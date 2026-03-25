@@ -1,16 +1,1 @@
-[
-  {
-    "Id": "b001",
-    "Title": "Clean Code",
-    "Author": "Robert C. Martin",
-    "Isbn": "9780132350884",
-    "CopiesAvailable": 3
-  },
-  {
-    "Id": "b002",
-    "Title": "Design Patterns",
-    "Author": "Erich Gamma",
-    "Isbn": "9780201633610",
-    "CopiesAvailable": 2
-  }
-]
+[{"Id":"b001","Title":"Clean Code","Author":"Robert C. Martin","Isbn":"9780132350884","CopiesAvailable":3},{"Id":"b002","Title":"Design Patterns","Author":"Erich Gamma","Isbn":"9780201633610","CopiesAvailable":2}]
