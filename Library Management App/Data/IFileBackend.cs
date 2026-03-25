@@ -5,7 +5,8 @@ namespace Library_Management_App.Data;
 
 public interface IFIleBackend<T>
 {
-    public bool Save(T data);
-
-    public List<T> Load();
+    bool Save(T data);
+    List<T> Load();
+    // Saves an entire list of objects to storage
+    bool SaveAll(List<T> allItems);
 }

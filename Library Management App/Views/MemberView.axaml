@@ -1,0 +1,87 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Library_Management_App.ViewModels"
+             x:Class="Library_Management_App.Views.MemberView"
+             x:DataType="vm:MemberViewModel">
+
+<Grid RowDefinitions="Auto,*">
+
+    <!-- HEADER -->
+    <Border Background="#1F140D" Padding="20">
+        <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="Library Catalog"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+            <Button Grid.Column="1"
+                    Content="Logout"
+                    Command="{Binding LogoutCommand}"/>
+        </Grid>
+    </Border>
+
+    <!-- MAIN -->
+    <Grid Grid.Row="1" ColumnDefinitions="2*,2*" Margin="20" ColumnSpacing="20">
+
+        <!-- CATALOG -->
+        <StackPanel>
+            <TextBlock Text="Search"/>
+            <TextBox Text="{Binding SearchText}" Width="200"/>
+
+            <Button Content="Search"
+                    Command="{Binding SearchCommand}"/>
+
+            <ListBox ItemsSource="{Binding Catalog}"
+                     SelectedItem="{Binding SelectedBook}"
+                     Height="350">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Author}"/>
+                            <TextBlock Text="{Binding CopiesAvailable,
+                            StringFormat='Available: {0}'}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+            <Button Content="Borrow"
+                    Command="{Binding BorrowBookCommand}"/>
+
+        </StackPanel>
+
+        <!-- MY LOANS -->
+        <StackPanel>
+
+            <TextBlock Text="My Loans"
+                       FontSize="18"
+                       FontWeight="Bold"/>
+
+            <ListBox ItemsSource="{Binding MyLoans}"
+                     SelectedItem="{Binding SelectedLoan}"
+                     Height="350">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding BookTitle}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding DueAtUtc,
+                            StringFormat='Due: {0:yyyy-MM-dd}'}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+            <Button Content="Return Book"
+                    Command="{Binding ReturnBookCommand}"/>
+
+        </StackPanel>
+
+    </Grid>
+
+</Grid>
+</UserControl>
