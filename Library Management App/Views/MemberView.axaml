@@ -32,7 +32,7 @@
                     Command="{Binding SearchCommand}"/>
 
             <ListBox ItemsSource="{Binding Catalog}"
-                     SelectedItem="{Binding SelectedBook}"
+                     SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
                      Height="350">
 
                 <ListBox.ItemTemplate>
@@ -50,6 +50,13 @@
 
             <Button Content="Borrow"
                     Command="{Binding BorrowBookCommand}"/>
+                  <TextBlock Text="{Binding StatusMessage}"
+                    Foreground="DarkRed"
+                     Margin="0,10,0,0"/>
+
+          <TextBlock Text="{Binding StatusMessage}"
+             Foreground="DarkRed"
+             Margin="0,10,0,0"/>
 
         </StackPanel>
 
@@ -61,7 +68,7 @@
                        FontWeight="Bold"/>
 
             <ListBox ItemsSource="{Binding MyLoans}"
-                     SelectedItem="{Binding SelectedLoan}"
+                     SelectedItem="{Binding SelectedLoan, Mode=TwoWay}"
                      Height="350">
 
                 <ListBox.ItemTemplate>
@@ -78,6 +85,9 @@
 
             <Button Content="Return Book"
                     Command="{Binding ReturnBookCommand}"/>
+                    <TextBlock Text="{Binding StatusMessage}"
+                      Foreground="DarkRed"
+                         Margin="0,10,0,0"/>
 
         </StackPanel>
 
