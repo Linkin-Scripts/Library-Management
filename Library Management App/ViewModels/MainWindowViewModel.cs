@@ -2,11 +2,16 @@
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using Library_Management_App.Views;
+using Library_Management_App.ViewModels;
 
 namespace Library_Management_App.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
+    private MemberViewModel? _memberViewModel;
+    private MemberView? _memberView;
+
     private readonly string _filePath = "Data/users.json";
 
     private LoginViewModel _loginViewModel;
@@ -45,7 +50,12 @@ public partial class MainWindowViewModel : ViewModelBase
                 return;
             }
 
-            CurrentView = HomeView;
+      _memberViewModel = new MemberViewModel(_loginViewModel.UserName);
+      _memberView = new MemberView() { DataContext = _memberViewModel };
+
+      _memberViewModel.LogoutRequested += () => CurrentView = LoginView;
+
+        CurrentView = _memberView;
         };
         _loginViewModel.RegisterClicked += () => CurrentView = RegisterView;
         _registerViewModel.LoginClicked += () => CurrentView = LoginView;

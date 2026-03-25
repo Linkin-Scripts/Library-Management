@@ -1,0 +1,147 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Library_Management_App.ViewModels"
+             x:Class="Library_Management_App.Views.MemberView"
+             x:DataType="vm:MemberViewModel">
+
+<Grid RowDefinitions="Auto,*">
+
+    <!-- HEADER -->
+    <Border Background="#1F140D" Padding="20">
+        <Grid ColumnDefinitions="*,Auto">
+
+            <TextBlock Text="Member Console"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+            <Button Grid.Column="1"
+                    Content="Logout"
+                    Command="{Binding LogoutCommand}"
+                    Classes="secondary"/>
+
+        </Grid>
+    </Border>
+
+    <!-- MAIN CONTENT -->
+    <Grid Grid.Row="1"
+          ColumnDefinitions="2*,2*"
+          ColumnSpacing="20"
+          Margin="20">
+
+        <!-- LIBRARY CATALOG -->
+        <Border Background="#F5EDD8"
+                Padding="15"
+                CornerRadius="8">
+
+            <StackPanel Spacing="10">
+
+                <TextBlock Text="Library Catalog"
+                           FontSize="18"
+                           FontWeight="Bold"/>
+
+                <!-- SEARCH -->
+                <TextBox Text="{Binding SearchText}"
+                         Watermark="Search by title or author"
+                         Classes="field"/>
+
+                <Button Content="Search"
+                        Command="{Binding SearchCommand}"
+                        Classes="secondary"/>
+
+                <!-- BOOK LIST -->
+                <ListBox ItemsSource="{Binding Catalog}"
+                         SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
+                         Height="300">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+
+                            <Border Padding="8">
+
+                                <StackPanel>
+
+                                    <TextBlock Text="{Binding Title}"
+                                               FontWeight="Bold"/>
+
+                                    <TextBlock Text="{Binding Author}"/>
+
+                                    <TextBlock Text="{Binding CopiesAvailable,
+                                            StringFormat='Available: {0}'}"/>
+
+                                </StackPanel>
+
+                            </Border>
+
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+
+                <!-- BORROW BUTTON -->
+                <Button Content="Borrow Selected Book"
+                        Command="{Binding BorrowBookCommand}"
+                        Classes="primary"/>
+
+            </StackPanel>
+
+        </Border>
+
+        <!-- MY LOANS -->
+        <Border Grid.Column="1"
+                Background="#F5EDD8"
+                Padding="15"
+                CornerRadius="8">
+
+            <StackPanel Spacing="10">
+
+                <TextBlock Text="My Loans"
+                           FontSize="18"
+                           FontWeight="Bold"/>
+
+                <ListBox ItemsSource="{Binding MyLoans}"
+                         SelectedItem="{Binding SelectedLoan, Mode=TwoWay}"
+                         Height="300">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+
+                            <Border Padding="8">
+
+                                <StackPanel>
+
+                                    <TextBlock Text="{Binding BookTitle}"
+                                               FontWeight="Bold"/>
+
+                                    <TextBlock Text="{Binding DueAtUtc,
+                                            StringFormat='Due: {0:yyyy-MM-dd}'}"/>
+
+                                </StackPanel>
+
+                            </Border>
+
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+
+                <!-- RETURN BUTTON -->
+                <Button Content="Return Selected Book"
+                        Command="{Binding ReturnBookCommand}"
+                        Classes="secondary"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+
+    <!-- STATUS MESSAGE -->
+    <TextBlock Grid.Row="1"
+               Margin="25,0,0,0"
+               VerticalAlignment="Bottom"
+               Text="{Binding StatusMessage}"
+               Foreground="DarkRed"/>
+
+</Grid>
+</UserControl>
